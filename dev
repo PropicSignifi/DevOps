@@ -34,7 +34,7 @@ _env() {
 
     if [ -z $RootDir ]; then
         case $1 in
-            deploy | fulldeploy | retrieve | lightning | static | runtest)
+            deploy | fulldeploy | retrieve | compile | lightning | static | runtest)
                 echo Cannot locate the appropriate project directory root.
                 echo
                 echo Please check if you are in a Salesforce project directory,
