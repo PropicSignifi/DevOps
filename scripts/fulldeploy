@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -f $RootDir/build_ui ]; then
+    cd $RootDir
+    ./build_ui
+fi
+
+dir=$RootDir/src
+
+sfdx force:mdapi:deploy -d $dir -u $OrgAlias -g -w 100 $@

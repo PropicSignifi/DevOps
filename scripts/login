@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    login_url="https://test.salesforce.com"
+else
+    login_url="https://$1"
+fi
+
+echo Opening "$login_url" in a browser
+
+sfdx force:auth:web:login --setalias $OrgAlias -r $login_url
+date

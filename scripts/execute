@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sfdx force:apex:execute -u $OrgAlias --loglevel debug | grep USER_DEBUG

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    dir=$RootDir/src
+else
+    dir=$1
+fi
+
+sfdx force:mdapi:retrieve -k $dir/package.xml -u $OrgAlias -r $dir/
+
+unzip $dir/unpackaged.zip -d $dir/
+
+cp -a $dir/unpackaged/* $dir/
+
+rm -r $dir/unpackaged*
+

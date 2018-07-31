@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    cat /dev/urandom |head |md5
+else
+    cat /dev/urandom |head |cksum |sed 's/ //'
+fi

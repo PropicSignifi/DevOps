@@ -1,0 +1,5 @@
+#!/bin/sh
+
+query="$@"
+
+sfdx force:data:soql:query -u $OrgAlias -q "$query"

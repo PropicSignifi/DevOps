@@ -1,0 +1,57 @@
+_dev() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    if [ $COMP_CWORD = 1 ];then
+        source dev dummy
+        opts=`ls -1 $ScriptsDir`
+    else
+        case ${COMP_WORDS[1]} in
+            login)
+                opts='test.salesforce.com login.salesforce.com'
+                ;;
+            alias)
+                opts=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
+                ;;
+            static)
+                source dev dummy
+                if [ -d $RootDir/ui/src/apps/ ]; then
+                    opts=`ls -1 $RootDir/ui/src/apps/`
+                else
+                    opts=`ls -1`
+                fi
+                ;;
+            compile)
+                source dev dummy
+                if [ -d $RootDir/src/classes/ ]; then
+                    opts=`cd $RootDir/src/classes/; ls -1 *.cls`
+                else
+                    opts=`ls -1`
+                fi
+                ;;
+            query)
+                opts='select from where limit order by like'
+                ;;
+            runtest)
+                source dev dummy
+                if [ -d $RootDir/src/classes/ ]; then
+                    opts=`cd $RootDir/src/classes/; ls -1 *Test.cls |cut -d '.' -f 1`
+                fi
+                ;;
+            open)
+                opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
+                opts+=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
+                ;;
+            *)
+                opts=`ls -1`
+                ;;
+        esac
+    fi
+
+    COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+    return 0
+}
+complete -o default -F _dev dev

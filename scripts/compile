@@ -1,0 +1,41 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+	echo "Usage: $0 <class file 1> [class file 2] ..."
+	exit 1
+fi
+
+class_files=$@
+dir=$RootDir/src/classes
+
+package=\
+'<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>ApexClass</name>
+    </types>
+	<version>41.0</version>
+</Package>
+'
+
+tmpdir=`mktemp -d` 
+
+echo "$package" > $tmpdir/package.xml
+
+class_dir=$tmpdir/classes
+mkdir $class_dir
+
+for class_file in $class_files;
+do
+    metafile=$class_file'-meta.xml'
+
+	cp $dir/$class_file $dir/$metafile $class_dir
+done
+
+date
+sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100
+date
+
+rm -rf $tmpdir
+

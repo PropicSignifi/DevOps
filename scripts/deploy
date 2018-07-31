@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    dir=$RootDir/src
+else
+    dir=$1
+    shift
+fi
+
+sfdx force:mdapi:deploy -d $dir -u $OrgAlias -g -w 100 $@

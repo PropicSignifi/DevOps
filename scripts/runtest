@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    # Run full test
+
+    result=`sfdx force:apex:test:run -r human -c -u $OrgAlias`
+    echo $result #| sed 's/.*"\(.*\)".*/\1/' 
+    echo $result #| sed 's/.*"\(.*\)".*/\1/' | xargs command
+
+else
+
+    classes=`echo "$@" |sed 's/ /,/g'`
+
+    result=`sfdx force:apex:test:run -n $classes -u $OrgAlias`
+    echo $result | sed 's/.*"\(.*\)".*/\1/' 
+    echo $result | sed 's/.*"\(.*\)".*/\1/' | xargs command
+
+fi
+

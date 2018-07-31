@@ -1,0 +1,12 @@
+#!/bin/sh
+
+object=$1
+shift
+
+if [ $1 = '-w' ]; then
+    shift
+    condition="$@"
+    sfdx force:data:record:get -u $OrgAlias -s $object -w "$condition"
+else
+    sfdx force:data:record:get -u $OrgAlias -s $object -i $1
+fi

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+remote=`git remote get-url origin | sed 's/.*@bitbucket.org:\(.*\).git/\1/'`
+
+branch=`git rev-parse --abbrev-ref HEAD`
+
+url="https://bitbucket.org/$remote/pull-requests/new?source=$remote::$branch"
+
+echo $url
+
+open $url

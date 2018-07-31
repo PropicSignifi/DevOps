@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    sfdx force:org:open -u $OrgAlias
+else
+    sfdx force:org:open -u $1
+fi

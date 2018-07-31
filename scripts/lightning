@@ -1,0 +1,134 @@
+#!/bin/bash
+tmpdir=`mktemp -d` 
+echo $tmpdir
+
+rm -r $RootDir/lightning/.last
+
+printTimestamp() {
+    stat -f "%c" $1
+}
+
+lastTimestamp() {
+    dir=$1
+    max=0
+    for file in `ls $dir`; do
+        timestamp=`printTimestamp $dir/$file`
+        if [[ $timestamp -gt $max ]];then
+            max=$timestamp
+        fi
+    done;
+
+    echo $max
+}
+
+if [[ ! -f $RootDir/lightning/.last ]];then
+    touch $RootDir/lightning/.last
+fi
+lastRun=`cat $RootDir/lightning/.last`
+
+runGulp=0
+
+if [[ `lastTimestamp "$RootDir/lightning/src/common"` -gt lastRun ]];then
+    runGulp=1
+fi
+if [[ `lastTimestamp "$RootDir/lightning/src/apps"` -gt lastRun ]];then
+    runGulp=1
+fi
+if [[ `lastTimestamp "$RootDir/lightning/src/preact"` -gt lastRun ]];then
+    runGulp=1
+fi
+if [[ `lastTimestamp "$RootDir/lightning/src/library"` -gt lastRun ]];then
+    runGulp=1
+fi
+if [[ `lastTimestamp "$RootDir/lightning/src/static"` -gt lastRun ]];then
+    runGulp=1
+fi
+
+if [[ forceRun -eq 1 ]];then
+    runGulp=1
+fi
+if [[ forceRun -eq 2 ]];then
+    runGulp=1
+fi
+
+package=\
+'<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+	<version>40.0</version>
+</Package>
+'
+
+meta=\
+'<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+	<contentType>application/zip</contentType>
+</StaticResource>
+'
+
+if [[ runGulp -eq 1 ]];then
+    cd $RootDir/lightning
+    gulp
+
+    if [[ $? -ne 0 ]];then
+        exit 1
+    fi
+
+    echo "Packaged"
+
+    echo "$package" > $tmpdir/package.xml
+
+    staticresource_dir=$tmpdir/staticresources
+    mkdir $staticresource_dir
+
+    cp $RootDir/lightning/dist/ctcPropertyLightning.zip $staticresource_dir/ctcPropertyLightning.resource
+    echo $meta > $staticresource_dir/ctcPropertyLightning.resource-meta.xml
+
+    date
+    sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100
+    date
+
+    echo "Uploading..."
+    echo "Uploaded"
+else
+    echo No need to run gulp and upload, as files are not changed.
+fi
+
+runDX=0
+
+if [[ `lastTimestamp "$RootDir/lightning/src/aura"` -gt lastRun ]];then
+    runDX=1
+fi
+
+if [[ forceRun -eq 1 ]];then
+    runDX=1
+fi
+
+if [[ runDX -eq 1 ]];then
+    rm -rf $tmpdir
+    mkdir -p $tmpdir
+    echo "$package" > $tmpdir/package.xml
+
+    bundle_dir=$tmpdir/aura
+    mkdir $bundle_dir
+
+    cp -r $RootDir/src/aura/* $bundle_dir/
+
+    date
+    sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100
+    date
+else
+    echo No need to run DX and deploy, as files are not changed.
+fi
+
+#rm -rf $tmpdir
+
+echo `date +%s` > $RootDir/lightning/.last

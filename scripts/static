@@ -1,0 +1,57 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    echo "Usage: $0 <package 1> [package 2] ..."
+    exit 1
+else
+	names=$@
+fi
+
+package=\
+'<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>StaticResource</name>
+    </types>
+	<version>40.0</version>
+</Package>
+'
+
+meta=\
+'<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+	<contentType>application/zip</contentType>
+</StaticResource>
+'
+
+cd $RootDir/ui
+
+gulp clean
+
+if [ -z $1 ];then
+	gulp package
+else
+	gulp package --$1
+fi
+
+tmpdir=`mktemp -d` 
+echo "Temp dir $tmpdir"
+
+echo "$package" > $tmpdir/package.xml
+
+staticresource_dir=$tmpdir/staticresources
+mkdir $staticresource_dir
+
+for name in $names;
+do
+	cp $RootDir/ui/dist/$name.zip $staticresource_dir/$name.resource
+	echo $meta > $staticresource_dir/$name.resource-meta.xml
+done
+
+date
+sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100
+date 
+rm -rf $tmpdir
+

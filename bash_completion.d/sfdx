@@ -1,0 +1,61 @@
+_sfdx() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    _get_comp_words_by_ref -n : cur
+
+
+    commands=\
+'
+        force:alias:list
+        force:apex:execute
+        force:apex:log:get
+        force:apex:log:list
+        force:apex:test:report
+        force:apex:test:run
+        force:auth:jwt:grant
+        force:auth:logout
+        force:auth:sfdxurl:store
+        force:auth:web:login
+        force:data:record:get
+        force:data:record:update
+        force:data:soql:query
+        force:limits:api:display
+        force:mdapi:deploy
+        force:mdapi:deploy:report
+        force:mdapi:retrieve
+        force:mdapi:retrieve:report
+        force:user:list
+'
+
+    if [ $COMP_CWORD = 1 ];then
+        opts="$commands  help"
+    else
+        case ${COMP_WORDS[1]} in
+            help)
+                opts=$commands
+                ;;
+            *)
+                case $prev in
+                    -u)
+                        opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
+                        ;;
+                    *)
+                        opts=`ls -1`
+                        ;;
+                esac
+                ;;
+        esac
+    fi
+
+	COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+
+    __ltrim_colon_completions "$cur"
+
+	return 0
+}
+complete -o default -F _sfdx sfdx
+

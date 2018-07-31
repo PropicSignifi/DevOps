@@ -1,0 +1,5 @@
+#!/bin/sh
+
+id=`dev query select id from $1 limit 1 |sed -n 3p`
+
+dev data $1 $id |tail +4 |sed 's/:.*//'
