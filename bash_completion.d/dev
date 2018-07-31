@@ -45,6 +45,22 @@ _dev()
                 opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
                 opts+=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
                 ;;
+            jenkins)
+                opts='ctcProperty Blochexchange website'
+                case ${COMP_WORDS[2]} in
+                    ctcProperty)
+                        opts='test release'
+                        ;;
+                    Blochexchange)
+                        opts='dev sit uat demo prod'
+                        ;;
+                    website)
+                        opts='ctc people property'
+                        ;;
+                    *)
+                        ;;
+                esac
+                ;;
             *)
                 opts=`ls -1`
                 ;;
