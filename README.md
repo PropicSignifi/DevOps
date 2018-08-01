@@ -35,6 +35,14 @@ echo "PATH+=:$PWD/DevOps" >> ~/.bashrc
 Then restarting your bash, or running `source ~/.bashrc`, will get things
 ready.
 
+To include the bash completion feature, append this code to your .bashrc
+
+```bash
+
+source $PWD/DevOps/bash_completion.d/dev
+
+```
+
 ## Repository based projects
 
 All the Salesforce commands requires login information to operate on an
