@@ -65,3 +65,91 @@ change the login user under the alias. So instead of running `dev login`,
 `dev alias <username>` will also do the same magic. To show all alias and
 its associated login user, we can run `dev alias` without a third argument.
 
+## Commands
+
+### dev login [url]
+
+Do OAuth login and associate the login information with the current project.
+
+An optional third argument `url` is available, which can be only either
+'test.salesforce.com' or 'login.salesforce.com'. If this argument is ommitted,
+the login will go to 'test.salesforce.com' by default.
+
+### dev open [alias|username]
+
+Open the org in the default browser without using password. If the `alias` or
+`username` is provided, it would open the org according to the provided login
+information, otherwise, it would choose the alias on the project to open.
+
+The `alias` or the `username` must have been used in the `dev login` at least
+once. More specifically, after running `dev login` on the project
+'ctcproperty' using the username 'sam@example.com', the OAuth information of
+'sam@example.com' will be saved, and 'ctcproperty' will be linked to the
+username 'sam@example.com'. In this case we can use `dev open ctcproperty` or
+`dev open sam@example.com` to open the org on the browser. Alternatively, if
+we have already navigated inside the 'ctcproperty' project directory, we can
+save the third argument, running `dev open` only.
+
+### dev alias [username]
+
+If the `username` is not provided, the command will list all alias with its
+associated username.
+
+If a `username` is given, the command will replace the associated username
+of the alias to the given `username`.
+
+### dev compile \<class\_file\> [class\_files ...]
+
+Compile the class files and deploy it to the associated org.
+
+The command requires at least one class file name.
+
+### dev static \<package\> [packages ...]
+
+Compile the static resources and deploy it to the associated org.
+
+The command requires at least one package name.
+
+### dev lightning
+
+Compile and deploy all lightning components and their related static resources.
+
+### dev runtest [test\_classes ...]
+
+Execute unit tests. If `test_classes` is provided, it will execute all test
+code within those classes. Otherwise, it will execute all test code in all
+classes.
+
+### dev query \<soql\_expression\>
+
+Execute an SOQL query and print the result to standard output.
+
+To avoid some of the characters, e.g. single quote, less than sign, being
+parsed as bash operators, it is recommended that the `soql_expression`
+is surrounded by double quotes.
+
+### dev execute
+
+Execute anonymous apex code from the standard input.
+
+If the command is `dev execute`, it reads the user terminal input as the
+standard input. In this case, we can type multiple lines of apex codes,
+then type CTRL-D indicating the end of file to finish.
+
+Alternatively, we can write the apex code in a file, then redirect the file
+to standard input of the `dev execute` command. Example:
+
+```bash
+
+dev execute < test.apex
+
+```
+
+### dev data \<object\_name\> \<record\_id\>
+
+Print detail of a record to standard output.
+
+### dev fields \<object\_name\>
+
+Print the fields of an object to standard output.
+
