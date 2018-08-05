@@ -25,5 +25,9 @@
 if [ -z $1 ]; then
     sfdx force:apex:log:list -u $OrgAlias | tee /tmp/apexlog
 else
-    cat /tmp/apexlog |tail +3 |sed -E 's/ +/ /g' |cut -d ' ' -f 3 | tail -n $1 | head -n 1 | xargs sfdx force:apex:log:get -u $OrgAlias -i
+    if [ $1 = tail ]; then
+        sfdx force:apex:log:tail -u $OrgAlias
+    else
+        cat /tmp/apexlog |tail +3 |sed -E 's/ +/ /g' |cut -d ' ' -f 3 | tail -n $1 | head -n 1 | xargs sfdx force:apex:log:get -u $OrgAlias -i
+    fi
 fi
