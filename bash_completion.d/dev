@@ -63,6 +63,9 @@ _dev()
                     opts=`cd $RootDir/src/classes/; ls -1 *Test.cls |cut -d '.' -f 1`
                 fi
                 ;;
+            log)
+                opts='tail'
+                ;;
             open)
                 opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
                 opts+=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`

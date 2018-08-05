@@ -36,6 +36,7 @@ _sfdx()
         force:apex:execute
         force:apex:log:get
         force:apex:log:list
+        force:apex:log:tail
         force:apex:test:report
         force:apex:test:run
         force:auth:jwt:grant
