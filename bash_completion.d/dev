@@ -64,7 +64,7 @@ _dev()
                 fi
                 ;;
             log)
-                opts='tail'
+                opts='list'
                 ;;
             open)
                 opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
