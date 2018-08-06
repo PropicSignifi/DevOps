@@ -40,13 +40,13 @@ _help() {
 _env() {
     RootDir=""
 
-    if [ -f $PWD/src/package.xml ]; then
+    if [ -d $PWD/.git ]; then
         RootDir=$PWD
     else
         Path=$PWD
         while [ $PWD != "/" ]; do
             cd ..
-            if [ -f $PWD/src/package.xml ]; then
+            if [ -d $PWD/.git ]; then
                 RootDir=$PWD
                 break
             fi
