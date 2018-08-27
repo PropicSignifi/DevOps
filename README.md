@@ -22,7 +22,9 @@ such as `brew` and `apt-get`.
 ## Installation
 
 A recommended way of installation is cloning this repository, then include
-the repository in your shell environment path.
+the repository in your shell environment path. In this example, we are
+using `~/.bashrc` as the shell startup script, though some shell may use other
+start up script, e.g. `~/.profile` or `~/.bash_profile`.
 
 ```bash
 
@@ -35,11 +37,11 @@ echo "PATH+=:$PWD/DevOps" >> ~/.bashrc
 Then restarting your bash, or running `source ~/.bashrc`, will get things
 ready.
 
-To include the bash completion feature, append this code to your .bashrc
+To include the bash completion feature, append this code to your bashrc.
 
 ```bash
 
-source $PWD/DevOps/bash_completion.d/dev
+echo "source $PWD/DevOps/bash_completion.d/dev" >> ~/.bashrc
 
 ```
 
