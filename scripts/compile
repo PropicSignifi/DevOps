@@ -52,7 +52,11 @@ for class_file in $class_files;
 do
     metafile=$class_file'-meta.xml'
 
-	cp $dir/$class_file $dir/$metafile $class_dir
+    if [ -f $PWD/$class_file ]; then
+        cp $PWD/$class_file $dir/$metafile $class_dir
+    else
+        cp $dir/$class_file $dir/$metafile $class_dir
+    fi
 done
 
 date
