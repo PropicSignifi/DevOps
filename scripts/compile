@@ -53,7 +53,7 @@ do
     metafile=$class_file'-meta.xml'
 
     if [ -f $PWD/$class_file ]; then
-        cp $PWD/$class_file $dir/$metafile $class_dir
+        cp $PWD/$class_file $PWD/$metafile $class_dir
     else
         cp $dir/$class_file $dir/$metafile $class_dir
     fi
