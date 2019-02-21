@@ -106,16 +106,6 @@ Compile the class files and deploy it to the associated org.
 
 The command requires at least one class file name.
 
-### dev static \<package\> [packages ...]
-
-Compile the static resources and deploy it to the associated org.
-
-The command requires at least one package name.
-
-### dev lightning
-
-Compile and deploy all lightning components and their related static resources.
-
 ### dev runtest [test\_classes ...]
 
 Execute unit tests. If `test_classes` is provided, it will execute all test
