@@ -98,7 +98,7 @@ If the `username` is not provided, the command will list all alias with its
 associated username.
 
 If a `username` is given, the command will replace the associated username
-of the alias to the given `username`.
+of the project with the given `username`.
 
 ### dev compile \<class\_file\> [class\_files ...]
 
@@ -119,6 +119,18 @@ Execute an SOQL query and print the result to standard output.
 To avoid some of the characters, e.g. single quote, less than sign, being
 parsed as bash operators, it is recommended that the `soql_expression`
 is surrounded by double quotes.
+
+```bash
+
+dev query select id from account
+
+```
+
+```bash
+
+dev query "select id from account where name = 'Jack' and createddate >= today"
+
+```
 
 ### dev execute
 
