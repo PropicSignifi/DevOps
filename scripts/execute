@@ -22,4 +22,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-sfdx force:apex:execute -u $OrgAlias --loglevel debug | grep USER_DEBUG
+sfdx force:apex:execute -u $OrgAlias --loglevel debug | grep USER_DEBUG |cut -d '|' -f 5
