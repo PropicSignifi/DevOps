@@ -140,12 +140,12 @@ If the command is `dev execute`, it reads the user terminal input as the
 standard input. In this case, we can type multiple lines of apex codes,
 then type CTRL-D indicating the end of file to finish.
 
-Alternatively, we can write the apex code in a file, then redirect the file
-to standard input of the `dev execute` command. Example:
+Alternatively, we can write the apex code in a file, then pass the file
+name as an argument.
 
 ```bash
 
-dev execute < test.apex
+dev execute test.apex
 
 ```
 
