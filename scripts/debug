@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    echo Requires an expression
+    exit 1
+fi
+
+code="System.debug($@);"
+
+echo "$code"
+echo "$code" | dev execute 
