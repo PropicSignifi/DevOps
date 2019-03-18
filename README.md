@@ -157,9 +157,13 @@ Print detail of a record to standard output.
 
 Print the fields of an object to standard output.
 
+### dev schema \<object\_name\>
+
+Print the full schema information of an object to standard output.
+
 ### dev debug \<apex\_expression\>
 
-Print the return value of an apex expression.
+Print the return value of an apex expression to standard output.
 
 ```bash
 
