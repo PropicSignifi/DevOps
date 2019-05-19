@@ -60,7 +60,7 @@ do
 done
 
 date
-sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100
+sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100 --verbose
 date
 
 rm -rf $tmpdir
