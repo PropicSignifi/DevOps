@@ -24,6 +24,7 @@
 
 if [ -z $1 ]; then
     cat ~/.sfdx/alias.json
+    echo
 else
     sed -i '' "s/\"$OrgAlias\": \".*\"/\"$OrgAlias\": \"$1\"/g" ~/.sfdx/alias.json
 fi
