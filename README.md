@@ -100,11 +100,30 @@ associated username.
 If a `username` is given, the command will replace the associated username
 of the project with the given `username`.
 
-### dev compile \<class\_file\> [class\_files ...]
+### dev compile \<class\_files|page\_files|trigger\_files\>
 
-Compile the class files and deploy it to the associated org.
+Compile the class/page/trigger files and deploy it to the associated org.
 
-The command requires at least one class file name.
+A file can be any of these types: Apex Class, Apex Page, Apex Trigger.
+
+```bash
+
+dev compile Query.cls TriggerOnAccount.trigger HomePage.page
+
+```
+
+By default, it will find the file in the relative pathname. If not found,
+it will look for files in the `src/classes`, `src/pages` or the `src/triggers`
+path.
+
+It is required that the related meta xml file in located in the same directory.
+
+For example, calling `dev compile Query.cls`, the script will try to find
+`Query.cls` in the current directory. If not found, it will look for `Query.cls`
+in the directory `src/classes`. If, for example, finding the `Query.cls` in the
+current path, the script will use the `Query.cls-meta.xml` file in the same
+directory for the deployment. If the `Query.cls-meta.xml` file is missing, the
+deployment will fail.
 
 ### dev runtest [test\_classes ...]
 
