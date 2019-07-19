@@ -112,11 +112,12 @@ dev compile Query.cls TriggerOnAccount.trigger HomePage.page
 
 ```
 
-By default, it will find the file in the relative pathname. If not found,
-it will look for files in the `src/classes`, `src/pages` or the `src/triggers`
-path.
+By default, it will look for the files using the relative pathname. If not
+found it will look for the files in the `src/classes`, `src/pages` or the
+`src/triggers` directories.
 
-It is required that the related meta xml file in located in the same directory.
+It is required that the related meta XML files are located in the same
+directory.
 
 For example, calling `dev compile Query.cls`, the script will try to find
 `Query.cls` in the current directory. If not found, it will look for `Query.cls`
