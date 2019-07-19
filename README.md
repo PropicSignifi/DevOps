@@ -190,3 +190,16 @@ Print the return value of an apex expression to standard output.
 dev debug "UserInfo.getUserId()"
 
 ```
+
+### dev deploy [directory]
+
+If `directory` is not provided, it will use `./src` as the directory.
+
+Deploy the all the files in the directory to the Org. It is required that the
+`package.xml` file is located in the directory.
+
+### dev retrive [directory]
+
+If `directory` is not provided, it will use `./src` as the directory.
+
+Retrive all the files from the Org using the `package.xml` in the directory.
