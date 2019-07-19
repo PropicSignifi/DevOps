@@ -23,12 +23,45 @@
 # SOFTWARE.
 
 if [ -z $1 ]; then
-	echo "Usage: $0 <class file 1> [class file 2] ..."
+	echo "Usage: $0 <class1 | page1 | trigger1> [class2 | page2 | trigger2] ..."
 	exit 1
 fi
 
-class_files=$@
-dir=$RootDir/src/classes
+files=$@
+
+tmpdir=`mktemp -d`
+
+mkdir $tmpdir/classes
+mkdir $tmpdir/pages
+mkdir $tmpdir/triggers
+
+for file in $files; do
+    metafile=$file'-meta.xml'
+    targetDir=""
+    srcDir=""
+    case $file in
+        *.cls)
+            targetDir=$tmpdir/classes
+            srcDir=$RootDir/src/classes
+            ;;
+        *.page)
+            targetDir=$tmpdir/pages
+            srcDir=$RootDir/src/pages
+            ;;
+        *.trigger)
+            targetDir=$tmpdir/triggers
+            srcDir=$RootDir/src/triggers
+            ;;
+        *)
+            echo Unrecognized file extension in $file
+            ;;
+    esac
+    if [ -f $file ]; then
+        cp $file $metafile $targetDir
+    else
+        cp $srcDir/$file $srcDir/$metafile $targetDir
+    fi           
+done
 
 package=\
 '<?xml version="1.0" encoding="UTF-8"?>
@@ -37,27 +70,20 @@ package=\
         <members>*</members>
         <name>ApexClass</name>
     </types>
-	<version>41.0</version>
+
+    <types>
+        <members>*</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTrigger</name>
+    </types>
+	<version>44.0</version>
 </Package>
 '
 
-tmpdir=`mktemp -d`
-
-echo "$package" > $tmpdir/package.xml
-
-class_dir=$tmpdir/classes
-mkdir $class_dir
-
-for class_file in $class_files;
-do
-    metafile=$class_file'-meta.xml'
-
-    if [ -f $PWD/$class_file ]; then
-        cp $PWD/$class_file $PWD/$metafile $class_dir
-    else
-        cp $dir/$class_file $dir/$metafile $class_dir
-    fi
-done
+echo $package > $tmpdir/package.xml
 
 date
 sfdx force:mdapi:deploy -u $OrgAlias -d $tmpdir -w 100 --verbose

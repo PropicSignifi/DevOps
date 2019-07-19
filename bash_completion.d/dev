@@ -48,10 +48,15 @@ _dev()
                 ;;
             compile)
                 source dev dummy
+                opts=''
                 if [ -d $RootDir/src/classes/ ]; then
-                    opts=`cd $RootDir/src/classes/; ls -1 *.cls`
-                else
-                    opts=`ls -1`
+                    opts+=`cd $RootDir/src/classes/; ls -1 *.cls`
+                fi
+                if [ -d $RootDir/src/pages/ ]; then
+                    opts+=`cd $RootDir/src/pages/; ls -1 *.page`
+                fi
+                if [ -d $RootDir/src/triggers/ ]; then
+                    opts+=`cd $RootDir/src/triggers/; ls -1 *.trigger`
                 fi
                 ;;
             query)
