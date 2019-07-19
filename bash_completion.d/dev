@@ -38,14 +38,6 @@ _dev()
             alias)
                 opts=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
                 ;;
-            static)
-                source dev dummy
-                if [ -d $RootDir/ui/src/apps/ ]; then
-                    opts=`ls -1 $RootDir/ui/src/apps/`
-                else
-                    opts=`ls -1`
-                fi
-                ;;
             compile)
                 source dev dummy
                 opts=''
