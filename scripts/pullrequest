@@ -33,7 +33,7 @@ else
 
     branch=`git rev-parse --abbrev-ref HEAD`
 
-    url="https://github.com/$remote/compare/$branch...master"
+    url="https://github.com/$remote/compare/master...$branch"
 fi
 
 echo $url
