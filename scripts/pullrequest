@@ -22,11 +22,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-remote=`git remote get-url origin | sed 's/.*@bitbucket.org:\(.*\).git/\1/'`
+if git remote get-url origin |grep bitbucket; then
+    remote=`git remote get-url origin | sed 's/.*@bitbucket.org:\(.*\).git/\1/'`
 
-branch=`git rev-parse --abbrev-ref HEAD`
+    branch=`git rev-parse --abbrev-ref HEAD`
 
-url="https://bitbucket.org/$remote/pull-requests/new?source=$remote::$branch"
+    url="https://bitbucket.org/$remote/pull-requests/new?source=$remote::$branch"
+else
+    remote=`git remote get-url origin | sed 's/.*@github.com:\(.*\).git/\1/'`
+
+    branch=`git rev-parse --abbrev-ref HEAD`
+
+    url="https://github.com/$remote/compare/$branch...master"
+fi
 
 echo $url
 
