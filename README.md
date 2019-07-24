@@ -5,15 +5,42 @@ Click To Cloud DevOps Toolbox
 This DevOps toolbox provides some of our daily used scripts, most of which
 are Salesforce platform related, typically wrappers of some `sfdx` commands.
 
+## Features
+
+### Shorter subcommands
+
+Instead of
+
+```bash
+sfdx force:apex:execute -u myOrgAlias -f ~/test.apex
+```
+
+We simply do
+
+```bash
+dev execute ~/test.apex
+```
+
+### Omit user name or org alias
+
+No need to worry about the long user name or alias. It automatically use
+the name of the git repository as an alias.
+
+### Bash auto completion
+
+For example, `dev alias ^TAB` will list all user name or alias you have saved.
+
+```
+$ dev alias
+admin@my-dev.com.au                  henry@my-dev.com.test
+```
+
 ## Prerequisite
 
 The toolbox runs on a Unix shell. The usual `sh` or `bash` is sufficient.
 
 Many of the commands require `sfdx`, which can be downloaded from the
 Salesforce official site: https://developer.salesforce.com/tools/sfdxcli
-
-Some special commands may have some other dependencies, which will be
-listed in other detailed pages.
 
 One feature of the toolbox is the bash auto completion, which requires the
 package `bash-completion`. This can be downloaded from package managers
@@ -47,50 +74,50 @@ echo "source $PWD/DevOps/bash_completion.d/dev" >> ~/.bashrc
 
 ## Repository based projects
 
-All the Salesforce commands requires login information to operate on an
-org. Fortunately, `sfdx` allows setting org alias which we can make use of.
-To make things convenient, we are using org alias base on the project
-directory name. For example, after cloning the repository 'ctcproperty', all
-Salesforce related commands running inside the repository, including its
-subdirectories, will be applied to the org with alias 'ctcproperty'.
+Suppose you are working on a git repository, run `dev login` if you haven't
+done so. After connecting to a Salesforce org, everything command you use
+inside the git repository will be against the org you just logged in.
 
-The first time operating under a new project, requires an OAuth login to link
-the OAuth tokens with the alias. Simply `cd` to your project directory and
-run `dev login`, which will popup a new window for the login. After the
-login, the alias and login information will be saved by `sfdx`. Next time
-if we want to link the alias to another login user, we can run `dev login`
-again to change the login account.
-
-Since `sfdx` has been saving our login information and alias names, we can
-save our time from running `dev login` all the time whenever we want to
-change the login user under the alias. So instead of running `dev login`,
-`dev alias <username>` will also do the same magic. To show all alias and
-its associated login user, we can run `dev alias` without a third argument.
+When you want to switch to another org for the same repository, you can do
+another `dev login`. Alternatively, if a username has been used to log in
+previously, you can run `dev alias yourusername@domain.com`. You can check
+all available usernames by auto completing the third argument of
+`dev alias ^TAB`.
 
 ## Commands
 
 ### dev login [url]
 
-Do OAuth login and associate the login information with the current project.
+Do OAuth login and associate the login information with the current repository.
 
 An optional third argument `url` is available, which can be only either
 'test.salesforce.com' or 'login.salesforce.com'. If this argument is ommitted,
 the login will go to 'test.salesforce.com' by default.
 
+The third argument can be auto completed.
+
+```bash
+dev login login.salesforce.com
+```
+
+```bash
+dev login
+```
+
 ### dev open [alias|username]
 
 Open the org in the default browser without using password. If the `alias` or
 `username` is provided, it would open the org according to the provided login
-information, otherwise, it would choose the alias on the project to open.
+information, otherwise, it would choose the alias on the repository to open.
 
 The `alias` or the `username` must have been used in the `dev login` at least
-once. More specifically, after running `dev login` on the project
-'ctcproperty' using the username 'sam@example.com', the OAuth information of
-'sam@example.com' will be saved, and 'ctcproperty' will be linked to the
-username 'sam@example.com'. In this case we can use `dev open ctcproperty` or
+once. More specifically, after running `dev login` on the repository
+'Query' using the username 'sam@example.com', the OAuth information of
+'sam@example.com' will be saved, and 'Query' will be linked to the username
+'sam@example.com'. In this case we can use `dev open Query` or
 `dev open sam@example.com` to open the org on the browser. Alternatively, if
-we have already navigated inside the 'ctcproperty' project directory, we can
-save the third argument, running `dev open` only.
+we have already navigated ourselves inside the 'Query' repository , we can
+omit the third argument, running `dev open` only.
 
 ### dev alias [username]
 
@@ -99,6 +126,8 @@ associated username.
 
 If a `username` is given, the command will replace the associated username
 of the project with the given `username`.
+
+The third argument can be auto completed.
 
 ### dev compile \<class\_files|page\_files|trigger\_files\>
 
@@ -126,11 +155,15 @@ current path, the script will use the `Query.cls-meta.xml` file in the same
 directory for the deployment. If the `Query.cls-meta.xml` file is missing, the
 deployment will fail.
 
+The arguments can be auto completed.
+
 ### dev runtest [test\_classes ...]
 
 Execute unit tests. If `test_classes` is provided, it will execute all test
 code within those classes. Otherwise, it will execute all test code in all
 classes.
+
+The arguments can be auto completed.
 
 ### dev query \<soql\_expression\>
 
@@ -151,6 +184,8 @@ dev query select id from account
 dev query "select id from account where name = 'Jack' and createddate >= today"
 
 ```
+
+Some keywords in SOQL can be auto completed, e.g. select, from, etc.
 
 ### dev execute
 
