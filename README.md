@@ -9,7 +9,7 @@ are Salesforce platform related, typically wrappers of some `sfdx` commands.
 
 ### Shorter subcommands
 
-Instead of
+For example, instead of
 
 ```bash
 sfdx force:apex:execute -u myOrgAlias -f ~/test.apex
