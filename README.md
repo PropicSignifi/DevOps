@@ -23,7 +23,7 @@ dev execute ~/test.apex
 
 ### Omit user name or org alias
 
-No need to worry about the long user name or alias. It automatically use
+No need to worry about the long usernames or alias. It automatically uses
 the name of the git repository as an alias.
 
 ### Bash auto completion
@@ -42,16 +42,19 @@ The toolbox runs on a Unix shell. The usual `sh` or `bash` is sufficient.
 Many of the commands require `sfdx`, which can be downloaded from the
 Salesforce official site: https://developer.salesforce.com/tools/sfdxcli
 
-One feature of the toolbox is the bash auto completion, which requires the
-package `bash-completion`. This can be downloaded from package managers
-such as `brew` and `apt-get`.
+The bash auto completion requires the package `bash-completion`, which can
+be downloaded from some package managers, for example `brew` or `apt-get`.
+
+```
+brew install bash-completion
+```
 
 ## Installation
 
-A recommended way of installation is cloning this repository, then include
+A recommended way of installation is cloning this repository, and including
 the repository in your shell environment path. In this example, we are
 using `~/.bashrc` as the shell startup script, though some shell may use other
-start up script, e.g. `~/.profile` or `~/.bash_profile`.
+startup script, e.g. `~/.profile` or `~/.bash_profile`.
 
 ```bash
 
