@@ -54,21 +54,23 @@ _env() {
         cd "$Path"
     fi
 
-    if [ -z "$RootDir" ]; then
-        case $1 in
-            deploy | fulldeploy | retrieve | compile | lightning | static | runtest)
-                echo Cannot locate the appropriate project directory root.
-                echo
-                echo Please check if you are in a Salesforce project directory,
-                echo and if the project directory root contains the file \'src/package.xml\'.
-                exit 1
-                ;;
-            *)
-                OrgAlias=Wild
-                ;;
-        esac
-    else
-        OrgAlias=`echo "$RootDir" | sed 's/.*\/\(.*\)/\1/'`
+    if [ -z $OrgAlias ]; then
+        if [ -z "$RootDir" ]; then
+            case $1 in
+                deploy | fulldeploy | retrieve | compile | lightning | static | runtest)
+                    echo Cannot locate the appropriate project directory root.
+                    echo
+                    echo Please check if you are in a Salesforce project directory,
+                    echo and if the project directory root contains the file \'src/package.xml\'.
+                    exit 1
+                    ;;
+                *)
+                    OrgAlias=Wild
+                    ;;
+            esac
+        else
+            OrgAlias=`echo "$RootDir" | sed 's/.*\/\(.*\)/\1/'`
+        fi
     fi
 
     export OrgAlias
