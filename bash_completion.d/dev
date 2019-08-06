@@ -75,7 +75,7 @@ _dev()
                 ;;
             runtest)
                 if [ -d "$RootDir/src/classes/" ]; then
-                    opts=`cd "$RootDir/src/classes/"; ls -1 *Test.cls |cut -d '.' -f 1`
+                    opts=`cd "$RootDir/src/classes/"; grep isTest -i *.cls -l |cut -d '.' -f 1`
                 fi
                 ;;
             log)
