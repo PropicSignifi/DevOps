@@ -20,6 +20,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+_env()
+{
+    RootDir=""
+
+    if [ -d "$PWD/.git" ]; then
+        RootDir="$PWD"
+    else
+        Path="$PWD"
+        while [ "$PWD" != "/" ]; do
+            cd ..
+            if [ -d "$PWD/.git" ]; then
+                RootDir="$PWD"
+                break
+            fi
+        done
+        cd "$Path"
+    fi
+}
+
 _dev()
 {
     local cur prev opts
@@ -27,8 +46,9 @@ _dev()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
+    _env
+
     if [ $COMP_CWORD = 1 ];then
-        source dev dummy
         opts=`ls -1 $ScriptsDir`
     else
         case ${COMP_WORDS[1]} in
@@ -39,7 +59,6 @@ _dev()
                 opts=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
                 ;;
             compile)
-                source dev dummy
                 opts=''
                 if [ -d "$RootDir/src/classes/" ]; then
                     opts+=`cd "$RootDir/src/classes/"; ls -1 *.cls`
@@ -55,7 +74,6 @@ _dev()
                 opts='select from where limit order by like'
                 ;;
             runtest)
-                source dev dummy
                 if [ -d "$RootDir/src/classes/" ]; then
                     opts=`cd "$RootDir/src/classes/"; ls -1 *Test.cls |cut -d '.' -f 1`
                 fi
