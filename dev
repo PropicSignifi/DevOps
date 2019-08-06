@@ -24,37 +24,37 @@
 
 BinDir=`which dev`
 
-if [ -z $BinDir ]; then
-    BinDir=$0
+if [ -z "$BinDir" ]; then
+    BinDir="$0"
 fi
 
-export BinDir=`echo $BinDir | sed 's/\(.*\)\/.*/\1/'`
-export ScriptsDir=$BinDir/scripts
+export BinDir=`echo "$BinDir" | sed 's/\(.*\)\/.*/\1/'`
+export ScriptsDir="$BinDir/scripts"
 
 _help() {
     Command=`echo $0 | sed 's/.*\/\(.*\)/\1/'`
-    Subcommands=`ls -1 $ScriptsDir |xargs basename |tr '\n' '|' | sed 's/\|$//'`
+    Subcommands=`ls -1 "$ScriptsDir" |xargs basename |tr '\n' '|' | sed 's/\|$//'`
     echo "Usage: $Command <$Subcommands>"
 }
 
 _env() {
     RootDir=""
 
-    if [ -d $PWD/.git ]; then
-        RootDir=$PWD
+    if [ -d "$PWD/.git" ]; then
+        RootDir="$PWD"
     else
-        Path=$PWD
-        while [ $PWD != "/" ]; do
+        Path="$PWD"
+        while [ "$PWD" != "/" ]; do
             cd ..
-            if [ -d $PWD/.git ]; then
-                RootDir=$PWD
+            if [ -d "$PWD/.git" ]; then
+                RootDir="$PWD"
                 break
             fi
         done
-        cd $Path
+        cd "$Path"
     fi
 
-    if [ -z $RootDir ]; then
+    if [ -z "$RootDir" ]; then
         case $1 in
             deploy | fulldeploy | retrieve | compile | lightning | static | runtest)
                 echo Cannot locate the appropriate project directory root.
@@ -68,7 +68,7 @@ _env() {
                 ;;
         esac
     else
-        OrgAlias=`echo $RootDir | sed 's/.*\/\(.*\)/\1/'`
+        OrgAlias=`echo "$RootDir" | sed 's/.*\/\(.*\)/\1/'`
     fi
 
     export OrgAlias
@@ -82,4 +82,4 @@ fi
 
 _env $@
 
-sh $ScriptsDir/$@
+sh "$ScriptsDir"/$@

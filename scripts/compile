@@ -39,27 +39,27 @@ for file in $files; do
     metafile=$file'-meta.xml'
     targetDir=""
     srcDir=""
-    case $file in
+    case "$file" in
         *.cls)
             targetDir=$tmpdir/classes
-            srcDir=$RootDir/src/classes
+            srcDir="$RootDir/src/classes"
             ;;
         *.page)
             targetDir=$tmpdir/pages
-            srcDir=$RootDir/src/pages
+            srcDir="$RootDir/src/pages"
             ;;
         *.trigger)
             targetDir=$tmpdir/triggers
-            srcDir=$RootDir/src/triggers
+            srcDir="$RootDir/src/triggers"
             ;;
         *)
             echo Unrecognized file extension in $file
             ;;
     esac
-    if [ -f $file ]; then
-        cp $file $metafile $targetDir
+    if [ -f "$file" ]; then
+        cp "$file" "$metafile" "$targetDir"
     else
-        cp $srcDir/$file $srcDir/$metafile $targetDir
+        cp "$srcDir/$file" "$srcDir/$metafile" "$targetDir"
     fi           
 done
 

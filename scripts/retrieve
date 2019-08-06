@@ -23,9 +23,9 @@
 # SOFTWARE.
 
 if [ -z $1 ]; then
-    dir=$RootDir/src
+    dir="$RootDir/src"
 else
-    dir=$1
+    dir="$1"
 fi
 
 sfdx force:mdapi:retrieve -k $dir/package.xml -u $OrgAlias -r $dir/

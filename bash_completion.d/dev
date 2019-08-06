@@ -41,14 +41,14 @@ _dev()
             compile)
                 source dev dummy
                 opts=''
-                if [ -d $RootDir/src/classes/ ]; then
-                    opts+=`cd $RootDir/src/classes/; ls -1 *.cls`
+                if [ -d "$RootDir/src/classes/" ]; then
+                    opts+=`cd "$RootDir/src/classes/"; ls -1 *.cls`
                 fi
-                if [ -d $RootDir/src/pages/ ]; then
-                    opts+=`cd $RootDir/src/pages/; ls -1 *.page`
+                if [ -d "$RootDir/src/pages/" ]; then
+                    opts+=`cd "$RootDir/src/pages/"; ls -1 *.page`
                 fi
-                if [ -d $RootDir/src/triggers/ ]; then
-                    opts+=`cd $RootDir/src/triggers/; ls -1 *.trigger`
+                if [ -d "$RootDir/src/triggers/" ]; then
+                    opts+=`cd "$RootDir/src/triggers/"; ls -1 *.trigger`
                 fi
                 ;;
             query)
@@ -56,8 +56,8 @@ _dev()
                 ;;
             runtest)
                 source dev dummy
-                if [ -d $RootDir/src/classes/ ]; then
-                    opts=`cd $RootDir/src/classes/; ls -1 *Test.cls |cut -d '.' -f 1`
+                if [ -d "$RootDir/src/classes/" ]; then
+                    opts=`cd "$RootDir/src/classes/"; ls -1 *Test.cls |cut -d '.' -f 1`
                 fi
                 ;;
             log)
