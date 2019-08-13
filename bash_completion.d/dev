@@ -35,8 +35,16 @@ _env()
                 break
             fi
         done
-        cd "$Path"
     fi
+
+    BinDir=`which dev`
+
+    if [ -z "$BinDir" ]; then
+        BinDir="$0"
+    fi
+
+    BinDir=`echo "$BinDir" | sed 's/\(.*\)\/.*/\1/'`
+    ScriptsDir="$BinDir/scripts"
 }
 
 _dev()
