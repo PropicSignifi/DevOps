@@ -25,13 +25,13 @@ _env()
     RootDir=""
 
     if [ -d "$PWD/.git" ]; then
-        RootDir="$PWD"
+        export RootDir="$PWD"
     else
-        Path="$PWD"
-        while [ "$PWD" != "/" ]; do
-            cd ..
-            if [ -d "$PWD/.git" ]; then
-                RootDir="$PWD"
+        Path=$PWD
+        while [ "$Path" != "/" ]; do
+            Path=$Path/../
+            if [ -d "$Path/.git" ]; then
+                export RootDir="$Path"
                 break
             fi
         done
