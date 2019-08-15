@@ -22,20 +22,19 @@
 
 _env()
 {
-    RootDir=""
-
-    if [ -d "$PWD/.git" ]; then
-        export RootDir="$PWD"
-    else
-        Path=$PWD
-        while [ "$Path" != "/" ]; do
-            Path=$Path/../
-            if [ -d "$Path/.git" ]; then
-                export RootDir="$Path"
-                break
-            fi
-        done
-    fi
+    RootDir=$(
+        if [ -d "$PWD/.git" ]; then
+            echo "$PWD"
+        else
+            while [ "$PWD" != "/" ]; do
+                cd ..
+                if [ -d "$PWD/.git" ]; then
+                    echo "$PWD"
+                    break
+                fi
+            done
+        fi
+    )
 
     BinDir=`which dev`
 
