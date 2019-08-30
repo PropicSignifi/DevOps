@@ -42,8 +42,9 @@ The toolbox runs on a Unix shell. The usual `sh` or `bash` is sufficient.
 Many of the commands require `sfdx`, which can be downloaded from the
 Salesforce official site: https://developer.salesforce.com/tools/sfdxcli
 
-The bash auto completion requires the package `bash-completion`, which can
-be downloaded from some package managers, for example `brew` or `apt-get`.
+The optional bash auto completion requires the package `bash-completion`,
+which can be downloaded from some package managers, for example `brew` or
+`apt-get`.
 
 ```
 brew install bash-completion
@@ -190,7 +191,7 @@ dev query "select id from account where name = 'Jack' and createddate >= today"
 
 Some keywords in SOQL can be auto completed, e.g. select, from, etc.
 
-### dev execute
+### dev execute [apex\_file]
 
 Execute anonymous apex code from the standard input.
 
