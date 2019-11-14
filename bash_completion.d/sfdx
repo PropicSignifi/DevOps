@@ -140,8 +140,11 @@ _sfdx()
                 ;;
             *)
                 case $prev in
-                    -u)
+                    -u|-v)
                         opts=`cat ~/.sfdx/alias.json  | grep '        "' | sed 's/^        "\([^"]*\)".*/\1/'`
+                        opts+=" "
+                        opts+=`ls -1 ~/.sfdx/ | grep @ | sed 's/\.json$//g'`
+
                         ;;
                     *)
                         opts=`ls -1`
