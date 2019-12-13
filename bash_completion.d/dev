@@ -83,6 +83,9 @@ _dev()
             scratch)
                 opts='create open delete'
                 ;;
+            source)
+                opts='pull push retrieve deploy'
+                ;;
             runtest)
                 if [ -d "$RootDir/src/classes/" ]; then
                     opts=`cd "$RootDir/src/classes/"; grep isTest -i *.cls -l |cut -d '.' -f 1`

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    echo "Usage: $0 [pull|push|retrieve|deploy]"
+elif [ $1 = pull ]; then
+    sfdx force:source:pull -u ${OrgAlias}Scratch -w 100
+elif [ $1 = push ]; then
+    sfdx force:source:push -u ${OrgAlias}Scratch -w 100
+fi
