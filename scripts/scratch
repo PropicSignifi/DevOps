@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+    echo "Usage: $0 [create|open|delete]"
+elif [ $1 = create ]; then
+    config_file=$2
+    if [ -z $2 ]; then
+        config_file="config/project-scratch-def.json"
+    fi
+    sfdx force:org:create -v $OrgAlias -f $config_file -w 20 -a ${OrgAlias}Scratch
+elif [ $1 = open ]; then
+    dev open ${OrgAlias}Scratch
+elif [ $1 = delete ]; then
+    sfdx force:org:delete -u ${OrgAlias}Scratch -p
+fi

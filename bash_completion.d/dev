@@ -80,6 +80,9 @@ _dev()
             query)
                 opts='select from where limit order by like'
                 ;;
+            scratch)
+                opts='create open delete'
+                ;;
             runtest)
                 if [ -d "$RootDir/src/classes/" ]; then
                     opts=`cd "$RootDir/src/classes/"; grep isTest -i *.cls -l |cut -d '.' -f 1`
