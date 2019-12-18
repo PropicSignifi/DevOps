@@ -24,18 +24,14 @@
 
 if [ -z $1 ]; then
     # Run full test
+    echo Running full test
 
-    result=`sfdx force:apex:test:run -r human -c -u $OrgAlias`
-    echo $result #| sed 's/.*"\(.*\)".*/\1/'
-    echo $result #| sed 's/.*"\(.*\)".*/\1/' | xargs command
-
+    sfdx force:apex:test:run -r human -c -u $OrgAlias -w 100
 else
-
     classes=`echo "$@" |sed 's/ /,/g'`
 
-    result=`sfdx force:apex:test:run -n $classes -u $OrgAlias`
-    echo $result | sed 's/.*"\(.*\)".*/\1/'
-    echo $result | sed 's/.*"\(.*\)".*/\1/' | xargs command
+    echo Running tests on $classes
 
+    sfdx force:apex:test:run -n $classes -u $OrgAlias -w 100
 fi
 
