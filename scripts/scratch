@@ -5,7 +5,7 @@ if [ -z $1 ]; then
 elif [ $1 = create ]; then
     config_file=$2
     if [ -z $2 ]; then
-        config_file="config/project-scratch-def.json"
+        config_file="${RootDir}/config/project-scratch-def.json"
     fi
     sfdx force:org:create -v $OrgAlias -f $config_file -w 20 -a ${OrgAlias}Scratch
 elif [ $1 = open ]; then
