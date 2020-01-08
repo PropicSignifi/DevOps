@@ -33,7 +33,7 @@ export ScriptsDir="$BinDir/scripts"
 
 _help() {
     Command=`echo $0 | sed 's/.*\/\(.*\)/\1/'`
-    Subcommands=`ls -1 "$ScriptsDir" |xargs basename |tr '\n' '|' | sed 's/\|$//'`
+    Subcommands=`ls -1 "$ScriptsDir" |tr '\n' '|' | sed 's/\|$//'`
     echo "Usage: $Command <$Subcommands>"
 }
 
