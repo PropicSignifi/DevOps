@@ -3,9 +3,9 @@
 if [ -z $1 ]; then
     echo "Usage: $0 [pull|push|retrieve|deploy]"
 elif [ $1 = pull ]; then
-    sfdx force:source:pull -u ${OrgAlias}Scratch -w 100
+    sfdx force:source:pull -u ${OrgAlias} -w 100
 elif [ $1 = push ]; then
-    sfdx force:source:push -u ${OrgAlias}Scratch -w 100
+    sfdx force:source:push -u ${OrgAlias} -w 100
 elif [ $1 = retrieve ]; then
     if [ -z $2 ]; then
         sfdx force:source:retrieve -u ${OrgAlias} -p $RootDir/force-app -w 100
@@ -14,7 +14,6 @@ elif [ $1 = retrieve ]; then
         cp $2 $tmpdir
         dev retrieve $tmpdir
         sfdx force:mdapi:convert -d $RootDir/force-app -r $tmpdir
-        rm -rf $tmpdir
     fi
 elif [ $1 = deploy ]; then
     sfdx force:source:deploy -u ${OrgAlias} -p $RootDir/force-app -w 100

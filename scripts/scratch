@@ -7,9 +7,11 @@ elif [ $1 = create ]; then
     if [ -z $2 ]; then
         config_file="${RootDir}/config/project-scratch-def.json"
     fi
-    sfdx force:org:create -v $OrgAlias -f $config_file -w 20 -a ${OrgAlias}Scratch
+    sed -i '' "s/\"$OrgAlias\": /\"${OrgAlias}Hub\": /" ~/.sfdx/alias.json
+    sfdx force:org:create -v ${OrgAlias}Hub -f $config_file -w 20 -a $OrgAlias
 elif [ $1 = open ]; then
     dev open ${OrgAlias}Scratch
 elif [ $1 = delete ]; then
-    sfdx force:org:delete -u ${OrgAlias}Scratch -p
+    sfdx force:org:delete -u $OrgAlias -p
+    sed -i '' "s/\"${OrgAlias}Hub\": /\"$OrgAlias\": /g" ~/.sfdx/alias.json
 fi
