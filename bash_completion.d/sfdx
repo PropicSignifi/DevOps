@@ -129,6 +129,23 @@ _sfdx()
         force:user:permset:assign
         force:visualforce:component:create
         force:visualforce:page:create
+        analytics:app:create
+        analytics:app:decouple
+        analytics:app:delete
+        analytics:app:list
+        analytics:app:update
+        analytics:asset:publisher:create
+        analytics:asset:publisher:delete
+        analytics:asset:publisher:deleteall
+        analytics:asset:publisher:list
+        analytics:dashboard:list
+        analytics:dashboard:update
+        analytics:dataflow:list
+        analytics:lens:list
+        analytics:template:create
+        analytics:template:delete
+        analytics:template:list
+        analytics:template:update
 '
 
     if [ $COMP_CWORD = 1 ];then
