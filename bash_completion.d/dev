@@ -84,7 +84,11 @@ _dev()
                 opts='create open delete'
                 ;;
             source)
-                opts='pull push retrieve deploy'
+                if [ ${COMP_WORDS[2]} = deploy ]; then
+                    opts='runtest'
+                else
+                    opts='pull push retrieve deploy'
+                fi
                 ;;
             runtest)
                 if [ -d "$RootDir/src/classes/" ]; then

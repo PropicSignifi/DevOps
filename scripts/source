@@ -16,5 +16,8 @@ elif [ $1 = retrieve ]; then
         sfdx force:mdapi:convert -d $RootDir/force-app -r $tmpdir
     fi
 elif [ $1 = deploy ]; then
-    sfdx force:source:deploy -u ${OrgAlias} -p $RootDir/force-app -w 100
+    if [ "$2" = runtest ]; then
+        runtest="-l RunLocalTests"
+    fi
+    sfdx force:source:deploy -u ${OrgAlias} -p $RootDir/force-app $runtest -w 100
 fi
