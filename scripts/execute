@@ -23,7 +23,9 @@
 # SOFTWARE.
 
 if [ -z $1 ]; then
-    sfdx force:apex:execute -u $OrgAlias --loglevel debug | grep USER_DEBUG |cut -d '|' -f 5
+    result=`sfdx force:apex:execute -u $OrgAlias --loglevel debug`
+    printf "$result" | grep USER_DEBUG |cut -d '|' -f 5
+    printf "$result" | grep FATAL_ERROR |cut -d '|' -f 3 > /dev/stderr
 else
     cat $1 | $0
 fi
